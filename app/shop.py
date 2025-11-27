@@ -25,9 +25,9 @@ class Shop:
         for product_name, quantity in product_cart.items():
             cost = self.calculate_product_cost(product_name, quantity)
             total_cost += cost
-            print(f"{quantity} {product_name}s for {cost:.10g} dollars")
+            print(f"{quantity} {product_name}s for {cost:.2f} dollars")
         
-        print(f"Total cost is {total_cost:.10g} dollars")
+        print(f"Total cost is {total_cost:.2f} dollars")
         print("See you again!\n")
         
         return total_cost
