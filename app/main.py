@@ -37,7 +37,7 @@ def shop_trip():
         
         if customer.money >= cheapest_cost:
             customer.travel_to(cheapest_shop)
-            customer.purchase(cheapest_shop)
+            customer.purchase(cheapest_shop, cheapest_cost)
             customer.go_home()
             print(f"{customer.name} now has {customer.money:.2f} dollars")
         else:

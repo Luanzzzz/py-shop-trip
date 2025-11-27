@@ -17,13 +17,17 @@ class Customer:
         distance = math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
         return distance
     
+    def calculate_products_cost(self, shop):
+        products_cost = 0
+        for product_name, quantity in self.product_cart.items():
+            products_cost += shop.calculate_product_cost(product_name, quantity)
+        return products_cost
+    
     def calculate_trip_cost(self, shop, fuel_price):
         distance_to_shop = self.calculate_distance_to(shop.location)
         total_distance = distance_to_shop * 2
         _, total_fuel_cost = self.car.calculate_fuel_needed(total_distance, fuel_price)
-        product_cost = 0
-        for product_name, quantity in self.product_cart.items():
-            product_cost += shop.calculate_product_cost(product_name, quantity)
+        product_cost = self.calculate_products_cost(shop)
         total_cost = total_fuel_cost + product_cost
         return total_cost
     
@@ -42,12 +46,9 @@ class Customer:
         print(f"{self.name} rides to {shop.name}")
         self.current_location = shop.location
     
-    def purchase(self, shop):
+    def purchase(self, shop, total_trip_cost):
         shop.print_receipt(self.name, self.product_cart)
-        products_cost = 0
-        for product_name, quantity in self.product_cart.items():
-            products_cost += shop.calculate_product_cost(product_name, quantity)
-        self.money -= products_cost
+        self.money -= total_trip_cost
     
     def go_home(self):
         print(f"{self.name} rides home")
